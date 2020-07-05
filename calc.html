@@ -1,0 +1,192 @@
+
+<html>
+<head>
+
+<SCRIPT language="javascript">
+<!--HIDE THE FOLLOWING
+function calculate( form )
+{
+	var wages = form.wages.value - 0;
+	var interest = form.interest.value - 0;
+	var dividends = form.dividends.value - 0;
+	var capgains = form.capgains.value - 0;
+	var iradistrib = form.iradistrib.value - 0;
+	var annuitypension = form.annuitypension.value - 0;
+	var otherinc = form.otherinc.value - 0;
+	
+	var ira = form.ira.value - 0;
+	var studloan = form.studloan.value - 0;
+	var moving = form.moving.value - 0;
+	var selfempltax = form.selfempltax.value - 0;
+	var selfhealthins = form.selfhealthins.value - 0;
+	var keoghsep = form.keoghsep.value - 0;
+	var otherdeduc = form.otherdeduc.value - 0;
+	
+	var grossincome, totaladj, agi;
+	
+	grossincome = wages + interest + dividends + capgains + iradistrib +
+			annuitypension + otherinc;
+	totaladj = ira + studloan + moving + selfempltax +
+			selfhealthins + keoghsep + otherdeduc;
+	agi = grossincome - totaladj;
+
+	form.grossincome.value = AddThousandsCommas( grossincome );
+	form.totaladj.value = AddThousandsCommas( totaladj );
+	form.agi.value = AddThousandsCommas( agi );
+}
+
+function process_input ( field )
+{
+	strip_number( field );
+	rejectNegatives( field );
+	if ( field.value != "" )
+		field.value = Math.round( field.value );
+}
+
+function strip_number ( field )
+{
+	var original_number = field.value;
+	var stripped_number = "";
+
+	for ( var i=0; i<original_number.length; i++ )
+	{
+		var digit = original_number.charAt(i);
+		if ( digit == '.' || digit == '-' || !( digit < "0" || digit > "9" ) )
+		{
+			stripped_number = stripped_number + digit;
+		}
+	}
+
+	if ( stripped_number )
+		field.value = stripped_number;
+	else
+		field.value = "";
+}
+
+function rejectNegatives ( field )
+{
+	if ( field.value < 0 ) {
+		alert( "Please, enter a positive number!" );
+		field.value = "";
+		field.focus();
+	}
+}
+
+function AddThousandsCommas( number )
+{
+	var T='', S = String(number), L = S.length-1, C, j;
+
+	for ( j=0; j<=L; j++ ) {
+		T += C = S.charAt(j);
+		if ( (j<L) && ((L-j)%3 == 0) && (C!='-') )
+			T+=',';
+	}
+	return T;
+}
+
+//-->
+</SCRIPT>
+
+
+<title>AGI-Adjusted Gross Income Calculator</title>
+</head>
+
+<body>
+
+<h1>What's your AGI?</h1>
+
+<h4>
+Adjusted gross income (AGI), or your income minus deductions, is 
+important when calculating your total tax liability. It not only 
+determines your tax bracket, but also tells you which credits you 
+qualify for and how much you're able to contribute each year to your 
+tax-deferred retirement accounts. Indeed, itemized deductions 
+including medical expenses and charitable contributions, begin phasing 
+out this year once your AGI reaches $132,950 for taxpayers who are
+single or married filing jointly and $66,475 for married taxpayers
+filing separately. Here's how to calculate your AGI.
+</h4>
+
+
+<form name="frmAGI">
+<b>1.) Determine your gross income</b><br><br>
+
+Wages, salary, tips:
+<input type="Text" name="wages" value="" size="9" onblur="process_input(this)"><br>
+Taxable interest:
+<input type="Text" name="interest" value="" size="9" onblur="process_input(this)"><br>
+Ordinary dividends:
+<input type="Text" name="dividends" value="" size="9" onblur="process_input(this)"><br>
+Capital gains (losses):
+<input type="Text" name="capgains" value="" size="9" onblur="process_input(this)"><br>
+Total IRA distributions - only the taxable amount:
+<input type="Text" name="iradistrib" value="" size="9" onblur="process_input(this)"><br>
+Pensions, annuities - only the taxable amount:
+<input type="Text" name="annuitypension" value="" size="9" onblur="process_input(this)"><br>
+Other:*
+<input type="Text" name="otherinc" value="" size="9" onblur="process_input(this)"><br>
+<br>
+
+* Include as "other" any income you may have received from your business; alimony;
+unemployment compensation; rental real estate; royalties, partnerships, S corporations
+and trusts; farm income; and any taxable Social Security benefits.  Also include
+taxable refunds, credits, or offsets in state and local income tax.<br><br>
+
+Gross income does not include gifts and inheritances, tax-free Social Security benefits and
+tax-free interest from state or local bonds.<br><br>
+
+<hr>
+
+<b>2.) Deduct the following items:</b><br><br>
+
+IRA contributions:
+<input type="Text" name="ira" value="" size="9" onblur="process_input(this)"><br>
+Student loan interest:
+<input type="Text" name="studloan" value="" size="9" onblur="process_input(this)"><br>
+Moving expenses:
+<input type="Text" name="moving" value="" size="9" onblur="process_input(this)"><br>
+One-half of self-employment tax:
+<input type="Text" name="selfempltax" value="" size="9" onblur="process_input(this)"><br>
+Self-employed health insurance contribution:
+<input type="Text" name="selfhealthins" value="" size="9" onblur="process_input(this)"><br>
+Contributions to SEP, SIMPLE and qualified plans for yourself:
+<input type="Text" name="keoghsep" value="" size="9" onblur="process_input(this)"><br>
+Other:**
+<input type="Text" name="otherdeduc" value="" size="9" onblur="process_input(this)"><br>
+<br>
+
+** Include as "other" any alimony paid, deductions for Archer Medical Savings Accounts, and
+penalties paid on early withdrawal of savings.<br><br>
+
+<input type="button" name="Calculate" value="Calculate AGI" onclick="calculate( document.frmAGI )"><br>
+
+<hr>
+
+TOTAL GROSS INCOME:
+<input type="Text" name="grossincome" value="" size="12" ><br><br>
+
+TOTAL DEDUCTIONS:
+<input type="Text" name="totaladj" value="" size="12"><br><br>
+
+AGI: <b>$</b><input type="Text" name="agi" value="" size="12">
+
+</form>
+
+Source: Internal Revenue Service
+
+<SCRIPT language="javascript">
+<!--HIDE THE FOLLOWING
+var url, idx, networth;
+
+url = String( window.location );
+idx = url.indexOf("?");
+idx = url.indexOf("networth", idx);
+idx = url.indexOf("=", idx);
+networth = url.substring( idx + 1 );
+document.frmAGI.grossincome.value = AddThousandsCommas( networth );
+document.frmAGI.grossincome.value = AddThousandsCommas( networth );
+//-->
+</SCRIPT>
+
+</body>
+</html>
